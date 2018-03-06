@@ -1,0 +1,24 @@
+page-home {
+    ion-header{
+    .toolbar-background {
+        background-color: red!important;
+    }
+    .toolbar-title {
+        color: white !important;
+    }
+    button{
+        color: white !important;  
+    }
+}
+
+ion-content {
+    background-color: #f1e0e0 !important;
+
+    ion-fab[bottom] {
+        bottom: 10px !important;
+    }
+    .fab-md{
+        background-color:  red !important;
+    }
+    }
+}

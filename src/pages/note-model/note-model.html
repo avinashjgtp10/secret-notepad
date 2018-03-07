@@ -13,11 +13,10 @@
     </ion-buttons>
 
     <ion-buttons end>
-      <button ion-button (click)="dismiss()">
+      <button ion-button (click)="saveNote()">
         save
       </button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
@@ -25,10 +24,10 @@
 <ion-content >
     <ion-list no-lines> 
           <ion-item no-lines>
-            <ion-input type="text" placeholder="Title"></ion-input>
+            <ion-input type="text" placeholder="Title" [(ngModel)]="title"></ion-input>
           </ion-item>
           <ion-item no-lines>
-              <ion-textarea placeholder="Note" [(ngModel)]="model"></ion-textarea>
+            <ion-textarea #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="text" placeholder="Note"></ion-textarea>
           </ion-item>
         
         </ion-list>

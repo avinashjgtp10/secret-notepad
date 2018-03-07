@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController,ModalController } from 'ionic-angular';
+import { NavController, ModalController, Modal } from 'ionic-angular';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @Component({
   selector: 'page-home',
@@ -7,46 +8,42 @@ import { NavController,ModalController } from 'ionic-angular';
 })
 export class HomePage {
 
+  noteTxt: any[] = [];
   noteTitle: string;
-  notes: any[] =
-  [
-    {
-      noteTitle: "My first note",
-      noteText: "this is note text"
-    },
-    {
-      noteTitle: "My first note1",
-      noteText: "this is note text1"
-    },
-    {
-      noteTitle: "My first note",
-      noteText: "this is note text"
-    },
-    {
-      noteTitle: "My first note1",
-      noteText: "this is note text1"
-    },
-    {
-      noteTitle: "My first note1",
-      noteText: "this is note text1"
-    },
-    {
-      noteTitle: "My first note",
-      noteText: "this is note text"
-    },
-    {
-      noteTitle: "My first note1",
-      noteText: "this is note text1"
-    }
-  ]
+  notes: any[];
+  // [
+  //   {
+  //     noteTitle: '',
+  //     noteText: 'This is my Demo note'
+  //   }
+  // ]
 
   constructor(public navCtrl: NavController,
-              private model:ModalController) {
-    console.log(this.notes[0].noteTitle);
+    private model: ModalController,
+    private nativeStorage: NativeStorage) {
+      this.nativeStorage.getItem("noteData").then(
+        data => {this.notes=data },
+        error => console.error(error)
+      );
   }
 
-  newNote(){
-   let noteModel= this.model.create("NoteModelPage");
+  newNote() {
+    let noteModel: Modal = this.model.create("NoteModelPage");
     noteModel.present();
+
+    noteModel.onDidDismiss((data) => {
+      this.noteTxt.push(data);
+
+      this.nativeStorage.setItem("noteData", this.noteTxt).then(
+        () => console.log("Note stored!"),
+        error => console.error("Error storing note",error)
+      );
+
+      this.nativeStorage.getItem("noteData").then(
+        data => {this.notes=data },
+        error => console.error(error)
+      );
+
+    });
   }
 }

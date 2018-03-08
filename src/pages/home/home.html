@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-card *ngFor="let noteData of notes">
+  <ion-card *ngFor="let noteData of notes; let i= index" (click)="editNote(i)" >
     <ion-card-header>
       {{noteData.noteTitle}}
     </ion-card-header>

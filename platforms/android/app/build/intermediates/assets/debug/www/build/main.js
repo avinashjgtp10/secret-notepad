@@ -63,33 +63,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HomePage = (function () {
-    // [
-    //   {
-    //     noteTitle: '',
-    //     noteText: 'This is my Demo note'
-    //   }
-    // ]
     function HomePage(navCtrl, model, nativeStorage) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.model = model;
         this.nativeStorage = nativeStorage;
-        this.noteTxt = [];
-        this.nativeStorage.getItem("noteData").then(function (data) { _this.notes = data; }, function (error) { return console.error(error); });
+        this.notes = [];
+        this.nativeStorage.getItem("noteData").then(function (data) { console.log(data); _this.notes = data; }, function (error) { return console.error(error); });
+        console.log(this.notes.reverse());
     }
+    HomePage.prototype.editNote = function (i) {
+        console.log("index:" + i);
+    };
     HomePage.prototype.newNote = function () {
         var _this = this;
         var noteModel = this.model.create("NoteModelPage");
         noteModel.present();
         noteModel.onDidDismiss(function (data) {
-            _this.noteTxt.push(data);
-            _this.nativeStorage.setItem("noteData", _this.noteTxt).then(function () { return console.log("Note stored!"); }, function (error) { return console.error("Error storing note", error); });
-            _this.nativeStorage.getItem("noteData").then(function (data) { _this.notes = data; }, function (error) { return console.error(error); });
+            _this.notes.push(data);
+            _this.nativeStorage.setItem("noteData", _this.notes).then(function (data) { return console.log("Note stored!" + data); }, function (error) { return console.error("Error storing note", error); });
         });
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/Avinash/Ionic/secret-notepad/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Secret Notepad</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card *ngFor="let noteData of notes">\n    <ion-card-header>\n      {{noteData.noteTitle}}\n    </ion-card-header>\n    <ion-card-content>\n      {{noteData.noteText}}\n    </ion-card-content>\n  </ion-card>\n  <ion-fab bottom right edge>\n    <button ion-fab mini>\n      <ion-icon name="add"></ion-icon>\n    </button>\n    <ion-fab-list side="top">\n      <button ion-fab (click)="newNote()">\n        <ion-icon name="create" ></ion-icon>\n      </button>\n      <button ion-fab>\n        <ion-icon name="alarm"></ion-icon>\n      </button>\n    </ion-fab-list>\n  </ion-fab>\n</ion-content>'/*ion-inline-end:"/Users/Avinash/Ionic/secret-notepad/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/Avinash/Ionic/secret-notepad/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Secret Notepad</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card *ngFor="let noteData of notes; let i= index" (click)="editNote(i)" >\n    <ion-card-header>\n      {{noteData.noteTitle}}\n    </ion-card-header>\n    <ion-card-content>\n      {{noteData.noteText}}\n    </ion-card-content>\n  </ion-card>\n  <ion-fab bottom right edge>\n    <button ion-fab mini>\n      <ion-icon name="add"></ion-icon>\n    </button>\n    <ion-fab-list side="top">\n      <button ion-fab (click)="newNote()">\n        <ion-icon name="create" ></ion-icon>\n      </button>\n      <button ion-fab>\n        <ion-icon name="alarm"></ion-icon>\n      </button>\n    </ion-fab-list>\n  </ion-fab>\n</ion-content>'/*ion-inline-end:"/Users/Avinash/Ionic/secret-notepad/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */],

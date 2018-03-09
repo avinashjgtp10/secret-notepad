@@ -42,7 +42,7 @@ export class NoteModelPage {
   }
 
   saveNote() {
-    if (this.title == '' && this.text == "") {
+    if (this.title == '' && this.text == '') {
       alert("Empty note can not insert")
     }
     else {

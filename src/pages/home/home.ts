@@ -14,17 +14,18 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     private model: ModalController,
     private nativeStorage: NativeStorage) {
+
     this.nativeStorage.getItem("noteData").then(
       data => { console.log(data); this.notes = data },
       error => console.error(error)
     );
-    console.log(this.notes.reverse());
   }
 
   editNote(i) {
-    console.log("index:" + i);
+    let editModel: Modal = this.model.create("EditNotePage", { index: i });
+    editModel.present();
   }
-  
+
   newNote() {
     let noteModel: Modal = this.model.create("NoteModelPage");
     noteModel.present();
@@ -37,5 +38,7 @@ export class HomePage {
         error => console.error("Error storing note", error)
       );
     });
+    
   }
+
 }
